@@ -24,7 +24,7 @@ namespace API.Controllers
         [HttpGet("{id}")] // /api/activities/fgfggf
         public async Task<ActionResult<Activity>> GetActivity(Guid id)
         {
-            return await Mediator.Send(new Details.Query{Id = id});
+            return await Mediator.Send(new Details.Query { Id = id });
         }
 
 
@@ -42,7 +42,7 @@ namespace API.Controllers
         public async Task<IActionResult> Edit(Guid id, Activity activity)
 
         {
-
+        
             activity.Id = id;
 
             await Mediator.Send(new Edit.Command { Activity = activity });
@@ -56,11 +56,11 @@ namespace API.Controllers
         public async Task<IActionResult> DeleteActivity(Guid id)
 
         {
-                await Mediator.Send(new Delete.Command {Id = id});
+            await Mediator.Send(new Delete.Command { Id = id });
 
-                return Ok();
+            return Ok();
 
         }
-      
+
     }
 }
