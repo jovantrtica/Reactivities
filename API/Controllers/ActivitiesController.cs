@@ -6,6 +6,7 @@ using Domain;
 using MediatR;
 using Application.Activities;
 using Application.Core;
+using Microsoft.AspNetCore.Authorization;
 
 
 
@@ -22,6 +23,8 @@ namespace API.Controllers
 
         }
 
+        // with authorise user needs to be authorized to get this endpoint
+        // [Authorize]
         [HttpGet("{id}")] // /api/activities/fgfggf
         public async Task<IActionResult> GetActivity(Guid id)
         {
