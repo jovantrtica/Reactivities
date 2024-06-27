@@ -8,7 +8,7 @@ namespace API.DTOs
 {
     public class RegisterDto
     {
-        [Required] // osobine podataka koje zelimo da ubacimo u bazu
+        [Required] // osobine podataka koje zelimo da ubacimo u bazu - moze prazan string ali ne sme null
         public string DisplayName { get; set; }
 
         [Required]
