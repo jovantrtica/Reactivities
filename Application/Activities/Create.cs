@@ -7,6 +7,8 @@ using FluentValidation;
 using System.Data;
 using FluentValidation.AspNetCore;
 using Application.Core;
+using Application.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace Application.Activities
 {
@@ -33,14 +35,29 @@ namespace Application.Activities
         {
 
             private readonly DataContext _context;
-            public Handler(DataContext context)
+            private readonly IUserAccessor _userAccessor;
+            public Handler(DataContext context, IUserAccessor userAccessor)
 
             {
+                _userAccessor = userAccessor;
                 _context = context;
+
             }
             public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
 
             {
+                var user = await _context.Users.FirstOrDefaultAsync(x => 
+                x.UserName == _userAccessor.GetUsername());
+
+                var attendie = new ActivityAttendee {
+
+                    AppUser = user,
+                    Activity = request.Activity,
+                    IsHost = true
+                };
+
+                request.Activity.Attendees.Add(attendie);
+
                 _context.Activities.Add(request.Activity);
 
                 var result = await _context.SaveChangesAsync() > 0;
