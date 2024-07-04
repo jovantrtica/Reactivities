@@ -3,13 +3,10 @@ import {
   Grid,
   GridColumn,
   Header,
-  Icon,
-  Image,
 } from "semantic-ui-react";
 import PhotoWidgetDropzone from "./PhotoWidgetDropzone";
 import { useEffect, useState } from "react";
 import PhotoWidgetCropper from "./PhotoWidgetCropper";
-import { Photo } from "../../models/profile";
 
 interface Props {
   loading: boolean;
