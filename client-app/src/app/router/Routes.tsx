@@ -7,6 +7,7 @@ import TestErrors from "../../features/errors/TestError";
 import NotFound from "../../features/errors/NotFound";
 import ServerError from "../../features/errors/ServerError";
 import LoginForm from "../../features/users/LoginForm";
+import ProfilePage from "../../features/profiles/ProfilePage";
 
 export const routes: RouteObject[] = [
   {
@@ -18,6 +19,7 @@ export const routes: RouteObject[] = [
       { path: "createActivity", element: <ActivityForm key="create" /> },
       { path: "login", element: <LoginForm /> },
       { path: "manage/:id", element: <ActivityForm key="manage" /> },
+      { path: "profiles/:username", element: <ProfilePage /> },
       { path: "errors", element: <TestErrors /> },
       { path: "server-error", element: <ServerError /> },
       { path: "not-found", element: <NotFound /> },
