@@ -133,6 +133,8 @@ export default class ActivityStore {
     }
   };
 
+
+
   deleteActivity = async (id: string) => {
     this.loading = true;
     try {
@@ -195,6 +197,10 @@ export default class ActivityStore {
     finally{
       runInAction(() => this.loading = false);
     }
+  }
+
+  clearSelectedActivity = () => {
+    this.selectedActivity = undefined;
   }
 
 }

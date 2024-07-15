@@ -23,7 +23,7 @@ export const routes: RouteObject[] = [
       { path: "errors", element: <TestErrors /> },
       { path: "server-error", element: <ServerError /> },
       { path: "not-found", element: <NotFound /> },
-      { path: "*", element: <Navigate replace to='not-found' /> }
+      { path: "*", element: <Navigate replace to="not-found" /> },
     ],
   },
 ];

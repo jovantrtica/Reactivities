@@ -33,54 +33,47 @@ export default class ProfileStore {
       console.log(error);
       runInAction(() => (this.loadingProfile = false));
     }
-  }
+  };
 
-  uploadPhoto = async (file: Blob) =>
-  {
-this.uploading = true;
-try {
-  
-  const response = await agent.Profiles.uploadPhoto(file);
-  const photo = response.data;
-  runInAction(() => {
-    if (this.profile ) {
-      this.profile.photos?.push(photo);
-      if (photo.isMain && store.userStore.user) {
-        store.userStore.setImage(photo.url);
-        this.profile.image = photo.url;
-      }
+  uploadPhoto = async (file: Blob) => {
+    this.uploading = true;
+    try {
+      const response = await agent.Profiles.uploadPhoto(file);
+      const photo = response.data;
+      runInAction(() => {
+        if (this.profile) {
+          this.profile.photos?.push(photo);
+          if (photo.isMain && store.userStore.user) {
+            store.userStore.setImage(photo.url);
+            this.profile.image = photo.url;
+          }
+        }
+        this.uploading = false;
+      });
+    } catch (error) {
+      console.log(error);
+      runInAction(() => (this.uploading = false));
     }
-    this.uploading = false;
-  })
-} catch (error) {
-  
-  console.log(error);
-  runInAction(() => this.uploading = false);
-}
-  }
+  };
 
   setMainPhoto = async (photo: Photo) => {
     this.loading = true;
     try {
-
-        await agent.Profiles.setMainPhoto(photo.id);
-        store.userStore.setImage(photo.url);
-        runInAction(() => {
-
-          if (this.profile && this.profile.photos) {
-            this.profile.photos.find(p => p.isMain)!.isMain = false;
-            this.profile.photos.find(p => p.id === photo.id)!.isMain = true;
-            this.profile.image = photo.url;
-            this.loading = false;
-          }
-        })
-    }
-
-    catch (error) {
-      runInAction(() => this.loading = false);
+      await agent.Profiles.setMainPhoto(photo.id);
+      store.userStore.setImage(photo.url);
+      runInAction(() => {
+        if (this.profile && this.profile.photos) {
+          this.profile.photos.find((p) => p.isMain)!.isMain = false;
+          this.profile.photos.find((p) => p.id === photo.id)!.isMain = true;
+          this.profile.image = photo.url;
+          this.loading = false;
+        }
+      });
+    } catch (error) {
+      runInAction(() => (this.loading = false));
       console.log(error);
     }
-  }
+  };
 
   deletePhoto = async (photo: Photo) => {
     this.loading = true;
@@ -88,14 +81,51 @@ try {
       await agent.Profiles.deletePhoto(photo.id);
       runInAction(() => {
         if (this.profile) {
-          this.profile.photos = this.profile.photos?.filter(p => p.id !== photo.id);
+          this.profile.photos = this.profile.photos?.filter(
+            (p) => p.id !== photo.id
+          );
           this.loading = false;
         }
-      })
-      
+      });
     } catch (error) {
-      runInAction(() => this.loading = false);
+      runInAction(() => (this.loading = false));
       console.log(error);
     }
-  }
+  };
+
+  //   updateBio = async (bio: ActivityFormValues) => { // ovo sam dodao ja
+
+  //   try {
+  //     await agent.Activities.update(activity);
+  //     runInAction(() => {
+  //       if (activity.id) {
+  //         const updatedActivity = {...this.getActivity(activity.id), ...activity}
+  //         this.activityRegistry.set(activity.id, updatedActivity as Activity);
+  //         this.selectedActivity = updatedActivity as Activity;
+  //       }
+
+  //     });
+  //   } catch (error) {
+  //     console.log(error);
+
+  //   }
+  // };
+
+  // updateName = async (activity: ActivityFormValues) => { // ovo sam dodao ja
+
+  //   try {
+  //     await agent.Activities.update(activity);
+  //     runInAction(() => {
+  //       if (activity.id) {
+  //         const updatedActivity = {...this.getActivity(activity.id), ...activity}
+  //         this.activityRegistry.set(activity.id, updatedActivity as Activity);
+  //         this.selectedActivity = updatedActivity as Activity;
+  //       }
+
+  //     });
+  //   } catch (error) {
+  //     console.log(error);
+
+  //   }
+  // };
 }

@@ -10,12 +10,13 @@ export interface Profile {
 
 }
 
-export class Profile implements Profile { 
+export class Profile implements Profile {
+    id: any; 
     constructor(user: User){
         this.username = user.username;
         this.displayName = user.displayName;
         this.image = user.image;
-
+        this.bio = user.bio; // dodao ja
     }
 }
 

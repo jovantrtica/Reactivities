@@ -15,7 +15,7 @@ namespace Application.Profiles
     {
         public class Query : IRequest<Result<Profile>>
         {
-            public string Username { get; set; }
+                    public string Username { get; set; }
         }
 
         public class Handler : IRequestHandler<Query, Result<Profile>>
