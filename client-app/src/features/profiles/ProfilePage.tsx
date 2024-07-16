@@ -10,11 +10,13 @@ import LoadingComponent from "../../app/layout/LoadingComponent";
 export default observer(function ProfilePage() {
   const { username } = useParams<{ username: string }>(); // preko useparams hooka uzima username parametar iz url
   const { profileStore } = useStore(); // pristupa profilestore iz mobxa preko usestore hooka
-  const { loadingProfile, loadProfile, profile } = profileStore; // 
+  const { loadingProfile, loadProfile, profile, setActiveTab } = profileStore; // 
 
   useEffect(() => {
-    if (username) {
-      loadProfile(username); // gleda da li username postoji i onda zove loadprofile funkciju ispod  sa username da loaduje data
+    
+      loadProfile(username as string); // gleda da li username postoji i onda zove loadprofile funkciju ispod  sa username da loaduje data
+    return () => {
+      setActiveTab(0);
     }
   }, [loadProfile, username]);
 

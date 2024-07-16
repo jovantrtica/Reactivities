@@ -4,89 +4,75 @@ import { useState } from "react";
 import { Button, Form, Header, Icon, Segment } from "semantic-ui-react";
 import MyTextInput from "../../app/common/form/MyTextInput";
 import MyTextArea from "../activities/form/MyTextArea";
-import { isCancel } from "axios";
-import ProfilePage from "./ProfilePage";
-import { ActivityFormValues } from "../../app/models/activity";
 import { Profile } from "../../app/models/profile";
 import * as Yup from "yup";
+import { useStore } from "../../app/stores/store";
 
 interface Props {
   profile: Profile;
 }
 
 export default observer(function ProfileAboutContent({ profile }: Props) {
+  const { profileStore } = useStore();
+  const { updateProfile, loading } = profileStore;
   const [isEditMode, setIsEditMode] = useState(false);
 
-    // function handleSubmit(bio: Profile) {
-    //   if (!bio.id) {
-    //       let newBio = {
-    //         ...bio, Id = id;
-    //       };
-    //       createActivity(newActivity).then(() => navigate(`/activities/${newActivity.id}`))
-
-    //   }
-    //   else {
-    //     updateActivity(activity).then(() => navigate(`/activities/${activity.id}`))
-    //   }
-
-    // }
+  async function handleUpdateProfile(profile: Profile) {
+    await updateProfile(profile);
+    setIsEditMode(false);
+  }
 
   const validationSchema = Yup.object({
-    name: Yup.string().required("Name is required"),
+    displayName: Yup.string().required("Name is required"),
   });
 
   return (
-    <Segment clearing>
+    <Segment clearing className="profile-about-container">
       <Header floated="left">
         <Icon name="user" />
-        About {profile.displayName}
+        <span>About {profile.displayName}</span>
+        <Button
+          onClick={() => setIsEditMode(!isEditMode)}
+          floated="right"
+          type="button"
+          content={isEditMode ? "Cancel" : "Edit Profile"}
+        />
       </Header>
 
-      <Button
-        onClick={() => setIsEditMode(!isEditMode)}
-        floated="right"
-        type="button"
-        content={isEditMode ? "Cancel" : "Edit Profile"}
-      />
-
       {isEditMode ? (
-        <div style={{ marginTop: "35px" }}>
-          <span>
-            <Formik
-              validationSchema={validationSchema}
-              initialValues={{ name: "", description: "" }}
-              onSubmit={(values) => {
-                console.log(values);
-                setIsEditMode(false);
-              }}
+        <Formik
+          validationSchema={validationSchema}
+          initialValues={profile}
+          onSubmit={(values) => {
+            console.log(values);
+            handleUpdateProfile(values);
+          }}
+        >
+          {({ handleSubmit, isValid, isSubmitting, dirty }) => (
+            <Form
+              className="ui form"
+              onSubmit={handleSubmit}
+              autoComplete="off"
             >
-              {({ handleSubmit, isValid, isSubmitting, dirty }) => (
-                <Form
-                  className="ui form"
-                  onSubmit={handleSubmit}
-                  autoComplete="off"
-                >
-                  <MyTextInput name="name" placeholder="Name" />
+              <MyTextInput name="displayName" placeholder="Name" />
 
-                  <MyTextArea
-                    rows={3}
-                    placeholder="Description"
-                    name="description"
-                  />
+              <MyTextArea
+                rows={3}
+                placeholder="Bio"
+                name="bio"
+              />
 
-                  <Button
-                    disabled={isSubmitting || !dirty || !isValid}
-                    loading={isSubmitting}
-                    floated="right"
-                    positive
-                    type="submit"
-                    content="Update profile"
-                  />
-                </Form>
-              )}
-            </Formik>
-          </span>
-        </div>
+              <Button
+                disabled={isSubmitting || !dirty || !isValid}
+                loading={isSubmitting}
+                floated="right"
+                positive
+                type="submit"
+                content="Update profile"
+              />
+            </Form>
+          )}
+        </Formik>
       ) : (
         <div>
           <span>{profile.bio}</span>
