@@ -19,18 +19,25 @@ namespace API.Controllers
             return HandleResult(await Mediator.Send(new Details.Query { Username = username }));
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateProfile([FromRoute] string id, [FromBody] UpdateProfileRequest request)
+        [HttpPut("{username}")]
+        public async Task<IActionResult> UpdateProfile([FromRoute] string username, [FromBody] UpdateProfileRequest request)
         {
 
             Edit.Command command = new Edit.Command()
             {
-                Id = id,
+                Username = username,
                 Bio = request.Bio,
                 DisplayName = request.DisplayName
+
             };
 
             return HandleResult(await Mediator.Send(command));
+        }
+
+          [HttpGet("{username}/activities")]
+        public async Task<IActionResult> GetUserActivities(string username, string predicate)
+        {
+            return HandleResult(await Mediator.Send(new ListActivities.Query { Username = username, Predicate = predicate }));
         }
     }
 }

@@ -18,6 +18,7 @@ export default observer(function ProfileAboutContent({ profile }: Props) {
   const [isEditMode, setIsEditMode] = useState(false);
 
   async function handleUpdateProfile(profile: Profile) {
+    console.log(profile);
     await updateProfile(profile);
     setIsEditMode(false);
   }
@@ -69,6 +70,7 @@ export default observer(function ProfileAboutContent({ profile }: Props) {
                 positive
                 type="submit"
                 content="Update profile"
+               
               />
             </Form>
           )}
