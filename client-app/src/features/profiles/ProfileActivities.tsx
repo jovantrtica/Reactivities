@@ -1,4 +1,4 @@
-import React, { SyntheticEvent, useEffect } from "react";
+import { SyntheticEvent, useEffect } from "react";
 import { observer } from "mobx-react-lite";
 import {
   Tab,
@@ -17,7 +17,6 @@ import { Link } from "react-router-dom";
 import { UserActivity } from "../../app/models/profile";
 import { format } from "date-fns";
 import { useStore } from "../../app/stores/store";
-import { User } from "../../app/models/user";
 
 const panes = [
   { menuItem: "Future Events", pane: { key: "future" } },
@@ -34,7 +33,7 @@ export default observer(function ProfileActivities() {
     loadUserActivities(profile!.username);
   }, [loadUserActivities, profile]);
 
-  const handleTabChange = (e: SyntheticEvent, data: TabProps) => {
+  const handleTabChange = (_e: SyntheticEvent, data: TabProps) => {
     loadUserActivities(
       profile!.username,
       panes[data.activeIndex as number].pane.key

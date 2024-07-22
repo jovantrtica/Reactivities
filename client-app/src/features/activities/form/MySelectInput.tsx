@@ -1,5 +1,4 @@
 import { useField } from "formik";
-import React from "react";
 import { Form, Label, Select } from "semantic-ui-react";
 
 interface Props {
@@ -21,7 +20,7 @@ export default function MySelectInput(props: Props) {
         clearable
         options={props.options}
         value={field.value || null}
-        onChange={(e, d) => helpers.setValue(d.value)}
+        onChange={(_e, d) => helpers.setValue(d.value)}
         onBlur={() => helpers.setTouched(true)}
         placeholder={props.placeholder}
         

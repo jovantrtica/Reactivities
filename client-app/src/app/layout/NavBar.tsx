@@ -8,7 +8,7 @@ import {
   DropdownItem,
   DropdownMenu,
 } from "semantic-ui-react";
-import { Link, NavLink, useSearchParams } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { useStore } from "../stores/store";
 import { observer } from "mobx-react-lite";
 

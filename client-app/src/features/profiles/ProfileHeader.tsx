@@ -1,14 +1,11 @@
 import {
-  Button,
   Divider,
   Grid,
   GridColumn,
   Header,
   Item,
-  Reveal,
   Segment,
   Statistic,
-  StatisticGroup,
 } from "semantic-ui-react";
 import { Profile } from "../../app/models/profile";
 import { observer } from "mobx-react-lite";

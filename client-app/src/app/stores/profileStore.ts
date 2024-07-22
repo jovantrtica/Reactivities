@@ -1,7 +1,6 @@
 import { makeAutoObservable, reaction, runInAction } from "mobx";
 import { Photo, Profile, UserActivity } from "../models/profile";
 import agent from "../api/agent";
-import { ru } from "date-fns/locale";
 import { store } from "./store";
 
 export default class ProfileStore {

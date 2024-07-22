@@ -1,5 +1,4 @@
 import { makeAutoObservable } from "mobx"
-import { JSXElementConstructor } from "react";
 
 interface Modal {
     open: boolean;

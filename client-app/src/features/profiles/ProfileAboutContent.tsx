@@ -14,7 +14,7 @@ interface Props {
 
 export default observer(function ProfileAboutContent({ profile }: Props) {
   const { profileStore } = useStore();
-  const { updateProfile, loading } = profileStore;
+  const { updateProfile } = profileStore;
   const [isEditMode, setIsEditMode] = useState(false);
 
   async function handleUpdateProfile(profile: Profile) {

@@ -3,15 +3,13 @@ import {
   Header,
   TabPane,
   Image,
-  Tab,
   Grid,
-  GridColumn,
   Button,
   ButtonGroup,
 } from "semantic-ui-react";
 import { Photo, Profile } from "../../app/models/profile";
 import { useStore } from "../../app/stores/store";
-import { HtmlHTMLAttributes, SyntheticEvent, useState } from "react";
+import { SyntheticEvent, useState } from "react";
 import PhotoUploadWidget from "../../app/common/imageUpload/PhotoUploadWidget";
 import { observer } from "mobx-react-lite";
 
